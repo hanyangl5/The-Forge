@@ -41,6 +41,10 @@
 #include <stdint.h>
 #endif
 
+constexpr uint64 BD_KB = 1024u;
+constexpr uint64 BD_MB = 1024u * BD_KB;
+constexpr uint64 BD_GB = 1024u * BD_MB;
+
 #define TF_KB (1024)
 #define TF_MB (1024 * TF_KB)
 #define TF_GB (1024 * TF_MB)
