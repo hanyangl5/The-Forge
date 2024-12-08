@@ -159,6 +159,7 @@ target_include_directories(${ENGINE_RUNTIME} PUBLIC
     ${ENGINE_RUNTIME_SOURCE_DIR}/Resource/Public
     ${ENGINE_RUNTIME_SOURCE_DIR}/Application/Public
     ${ENGINE_RUNTIME_SOURCE_DIR}/Scripting/Public
+    ${THIRD_PARTY_INCLUDES}
 )
 
 # https://cmake.org/cmake/help/latest/command/target_precompile_headers.html
@@ -180,11 +181,18 @@ target_compile_definitions(${ENGINE_RUNTIME} PUBLIC ${RHI_DEFINES})
 # unity build
 set_target_properties(${ENGINE_RUNTIME} PROPERTIES UNITY_BUILD ON)
 
-set_property(TARGET ${ENGINE_RUNTIME} PROPERTY CXX_STANDARD 17)
+target_compile_features(${ENGINE_RUNTIME} PRIVATE cxx_std_20)
 
 if (${APPLE_PLATFORM} MATCHES ON)
     set(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} -std=c++17 -stdlib=libc++ -x objective-c++")
     target_compile_options(${ENGINE_RUNTIME} PRIVATE "-fobjc-arc")
+endif()
+
+# Add compiler-specific flags
+if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+    target_compile_options(${ENGINE_RUNTIME} PRIVATE -fno-rtti -fno-exceptions)
+elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+    target_compile_options(${ENGINE_RUNTIME} PRIVATE /GR- /EHs-c-)
 endif()
 
 

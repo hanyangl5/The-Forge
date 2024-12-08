@@ -169,3 +169,5 @@ static void tf_delete_internal(T* ptr, const char* f, int l, const char* sf)
 #ifdef IMEMORY_FROM_HEADER
 #undef IMEMORY_FROM_HEADER
 #endif
+
+#include <mimalloc/mimalloc.h>

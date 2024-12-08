@@ -28,6 +28,7 @@ set_property(TARGET DirectXShaderCompiler PROPERTY IMPORTED_LOCATION
     ${ENGINE_THIRD_PARTY_SOURCE_DIR}/DirectXShaderCompiler/lib/x64/dxcompiler.lib
 )
 
+
 # if(ANTUMBRA_BUILD_VK)
 #     # prefer to use system installed vulkan sdk
 #     find_package(Vulkan)
@@ -334,6 +335,12 @@ add_library(Ozz STATIC ${OZZ_FILES})
 target_include_directories(Ozz PUBLIC ${OZZ_INCLUDES})
 
 add_subdirectory(${ENGINE_THIRD_PARTY_SOURCE_DIR}/DirectX-Headers)
+add_subdirectory(${ENGINE_THIRD_PARTY_SOURCE_DIR}/mimalloc)
+
+set(THIRD_PARTY_INCLUDES
+    ${ENGINE_THIRD_PARTY_SOURCE_DIR}/mimalloc/include
+)
+
 
 set(THIRD_PARTY_DEPS
 
@@ -351,4 +358,5 @@ set(THIRD_PARTY_DEPS
     cpu_features
     DirectX-Headers
     stb
+    mimalloc-static
 )
